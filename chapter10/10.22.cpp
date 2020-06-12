@@ -2,6 +2,8 @@
 #include <vector>
 #include <algorithm>
 #include <string>
+#include <functional>
+using namespace std::placeholders;
 using namespace std;
 
 template <typename T>
@@ -26,12 +28,17 @@ string make_plural(size_t ctr, const string &word, const string &ending)
     return (ctr > 1) ? word + ending : word;
 }
 
+bool func(const string &words, vector<string>::size_type sz)
+{
+    return words.size() >= sz;
+}
+
 void biggies(vector<string> &words, vector<string>::size_type sz)
 {
     elimDups(words);
     stable_sort(words.begin(), words.end(), [](const string &a, const string &b) { return a.size() < b.size(); });
     auto wc = stable_partition(words.begin(), words.end(), [sz](const string &a) { return a.size() >= sz; });
-    auto count = count_if(words.begin(), words.end(), [=](const string &a) { return a.size() >= sz; });
+    auto count = count_if(words.begin(), words.end(), bind(func, _1, sz));
     cout << count << " " << make_plural(count, "word", "s") << " of length " << sz << " or longer" << endl;
     for_each(words.begin(), wc, [](const string &s) { cout << s << " "; });
     cout << endl;
