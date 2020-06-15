@@ -5,7 +5,7 @@
 
 using namespace std;
 
-void print(map<string, vector<string>> &family)
+void print(map<string, vector<string>> &family, vector<pair<string, string>> &birth)
 {
     cout << endl;
     if (family.size() == 0)
@@ -19,13 +19,20 @@ void print(map<string, vector<string>> &family)
         }
         cout << endl;
     }
+
+    for (auto itb = birth.cbegin(); itb != birth.cend(); ++itb)
+    {
+        cout << itb->first << " " << itb->second << endl;
+    }
 }
 
 int main(int argc, char* argv[])
 {
     map<string, vector<string>> family;
+    vector<pair<string, string>> birth;
     string surname;//姓氏
     string name;//名字
+    string birthday;//生日
     while (1)
     {
         char choice;
@@ -42,7 +49,10 @@ int main(int argc, char* argv[])
                     cin >> surname;
                     cout << "请输入家庭中孩子的名字" << endl;
                     cin >> name;
+                    cout << "请输入家庭中孩子的生日" << endl;
+                    cin >> birthday;
                     family[surname].push_back(name);
+                    birth.push_back(make_pair(name, birthday));
                     break;
                 }
             case '2' :
@@ -51,12 +61,15 @@ int main(int argc, char* argv[])
                     cin >> surname;
                     cout << "请输入新添加的孩子的名字" << endl;
                     cin >> name;
+                    cout << "请输入家庭中孩子的生日" << endl;
+                    cin >> birthday;
                     family[surname].push_back(name);
+                    birth.push_back(make_pair(name, birthday));
                     break;
                 }
             case 'p' :
                 {
-                    print(family);
+                    print(family, birth);
                     break;
                 }
             case 'q' :

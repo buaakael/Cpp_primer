@@ -5,7 +5,7 @@
 
 using namespace std;
 
-void print(map<string, vector<string>> &family)
+void print(multimap<string, vector<string>> &family)
 {
     cout << endl;
     if (family.size() == 0)
@@ -23,9 +23,10 @@ void print(map<string, vector<string>> &family)
 
 int main(int argc, char* argv[])
 {
-    map<string, vector<string>> family;
+    multimap<string, vector<string>> family;
     string surname;//姓氏
     string name;//名字
+    vector<string> v;
     while (1)
     {
         char choice;
@@ -42,7 +43,9 @@ int main(int argc, char* argv[])
                     cin >> surname;
                     cout << "请输入家庭中孩子的名字" << endl;
                     cin >> name;
-                    family[surname].push_back(name);
+                    v.push_back(name);
+                    family.insert(make_pair(surname, v));
+                    v.clear();
                     break;
                 }
             case '2' :
@@ -51,7 +54,8 @@ int main(int argc, char* argv[])
                     cin >> surname;
                     cout << "请输入新添加的孩子的名字" << endl;
                     cin >> name;
-                    family[surname].push_back(name);
+                    auto it = family.find(surname);
+                    it->second.push_back(name);
                     break;
                 }
             case 'p' :
