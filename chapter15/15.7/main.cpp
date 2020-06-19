@@ -2,12 +2,19 @@
 #include <string>
 
 #include "quote.h"
+#include "bulk_quote.h"
+#include "limit_quote.h"
 
 double print_total(std::ostream &os, const Quote& item, size_t n);
 
 int main()
 {
-
+    Quote q("textbook", 10.60);
+    Bulk_quote bq("textbook", 10.60, 10, 0.3);
+    Limit_quote lq("textbook", 10.60, 10, 0.3);
+    print_total(std::cout, q, 12);
+    print_total(std::cout, bq, 12);
+    print_total(std::cout, lq, 12);
     return 0;
 }
 
